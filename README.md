@@ -91,6 +91,8 @@ Clientes de exemplo já disponíveis na interface:
 
 ## 7. Observações 📝
 
+- a interface é responsiva e foi pensada para funcionar bem em desktop, tablet e mobile
+- em telas menores, grids, filtros, cards e botões se reorganizam para uma coluna e ocupam largura total para melhorar a leitura e a usabilidade
 - os valores monetários são mantidos como decimal textual para evitar perda de precisão em number
 - a tela de faturas deriva os ciclos a partir do extrato e do valor ainda em aberto
 - a interface não depende de roteamento; a navegação entre telas é feita por estado local
