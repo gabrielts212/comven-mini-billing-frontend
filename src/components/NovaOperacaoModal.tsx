@@ -21,7 +21,7 @@ export function NovaOperacaoModal({
   onSuccess,
 }: NovaOperacaoModalProps) {
   const [amount, setAmount] = useState("75,00");
-  const [description, setDescription] = useState("Pagamento instantaneo");
+  const [description, setDescription] = useState("Pagamento instantâneo");
   const [kind, setKind] = useState("1");
   const [idempotencyKey, setIdempotencyKey] = useState(randomIdempotencyKey);
   const [simulateProviderFailure, setSimulateProviderFailure] = useState(false);
@@ -69,7 +69,7 @@ export function NovaOperacaoModal({
       setError(
         submitError instanceof Error
           ? submitError.message
-          : "Nao foi possivel criar a operacao.",
+          : "Não foi possível criar a operação.",
       );
     } finally {
       setSubmitting(false);
@@ -81,9 +81,9 @@ export function NovaOperacaoModal({
       <div aria-modal="true" className="modal-panel" role="dialog">
         <div className="modal-header">
           <div>
-            <h3>Nova operacao</h3>
+            <h3>Nova operação</h3>
             <p className="muted">
-              Crie uma operacao com chave de idempotencia e retorno de erro
+              Crie uma operação com chave de idempotência e retorno de erro
               claro.
             </p>
           </div>
@@ -120,13 +120,13 @@ export function NovaOperacaoModal({
                   value={kind}
                   onChange={(event) => setKind(event.target.value)}
                 >
-                  <option value="1">Autorizacao</option>
+                  <option value="1">Autorização</option>
                   <option value="2">Estorno</option>
                 </select>
               </div>
 
               <div className="field">
-                <label htmlFor="idempotencyKey">Chave de idempotencia</label>
+                <label htmlFor="idempotencyKey">Chave de idempotência</label>
                 <input
                   id="idempotencyKey"
                   type="text"
@@ -137,7 +137,7 @@ export function NovaOperacaoModal({
             </div>
 
             <div className="field" style={{ marginTop: "14px" }}>
-              <label htmlFor="description">Descricao</label>
+              <label htmlFor="description">Descrição</label>
               <input
                 id="description"
                 type="text"
@@ -154,7 +154,7 @@ export function NovaOperacaoModal({
                   setSimulateProviderFailure(event.target.checked)
                 }
               />
-              Simular timeout em todos os fornecedores e validar estorno unico.
+              Simular timeout em todos os fornecedores e validar estorno único.
             </label>
 
             <div className="actions">
@@ -163,7 +163,7 @@ export function NovaOperacaoModal({
                 disabled={submitting}
                 type="submit"
               >
-                {submitting ? "Enviando..." : "Criar operacao"}
+                {submitting ? "Enviando..." : "Criar operação"}
               </button>
               <button
                 className="button button-secondary"

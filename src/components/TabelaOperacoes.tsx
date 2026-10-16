@@ -32,7 +32,7 @@ export function TabelaOperacoes({ items }: TabelaOperacoesProps) {
   if (items.length === 0) {
     return (
       <div className="empty-state">
-        Nenhuma movimentacao encontrada para o periodo informado.
+        Nenhuma movimentação encontrada para o período informado.
       </div>
     );
   }
@@ -43,12 +43,12 @@ export function TabelaOperacoes({ items }: TabelaOperacoesProps) {
         <thead>
           <tr>
             <th>Data e hora</th>
-            <th>Descricao</th>
+            <th>Descrição</th>
             <th>Fornecedor</th>
             <th>Tipo</th>
             <th>Status</th>
             <th>Valor</th>
-            <th>Saldo apos</th>
+            <th>Saldo após</th>
           </tr>
         </thead>
         <tbody>

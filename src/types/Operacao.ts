@@ -30,14 +30,14 @@ export interface CriarOperacaoResponse {
 }
 
 export const operationKindLabel: Record<number, string> = {
-  1: "Autorizacao",
+  1: "Autorização",
   2: "Estorno",
   3: "Fechamento de fatura",
 };
 
 export const operationStatusLabel: Record<number, string> = {
   1: "Pendente",
-  2: "Concluida",
+  2: "Concluída",
   3: "Falhou",
   4: "Estornada",
 };

@@ -5,7 +5,7 @@ export function normalizeDecimalInput(input: string): DecimalValue {
 
   if (!/^[-]?\d+(\.\d{0,2})?$/.test(trimmed)) {
     throw new Error(
-      "Informe um valor monetario valido com ate duas casas decimais.",
+      "Informe um valor monetário válido com até duas casas decimais.",
     );
   }
 
@@ -27,7 +27,7 @@ export function decimalFromApi(value: unknown): DecimalValue {
     return normalizeDecimalInput(String(value));
   }
 
-  throw new Error("A API retornou um valor monetario invalido.");
+  throw new Error("A API retornou um valor monetário inválido.");
 }
 
 export function formatDecimalCurrency(value: DecimalValue): string {
@@ -57,7 +57,8 @@ export function decimalToCents(value: DecimalValue): number {
   const negative = normalized.startsWith("-");
   const unsigned = negative ? normalized.slice(1) : normalized;
   const [wholePart, fractionPart = "00"] = unsigned.split(".");
-  const cents = Number.parseInt(wholePart, 10) * 100 + Number.parseInt(fractionPart, 10);
+  const cents =
+    Number.parseInt(wholePart, 10) * 100 + Number.parseInt(fractionPart, 10);
 
   return negative ? -cents : cents;
 }
@@ -76,7 +77,10 @@ export function centsToDecimal(value: number): DecimalValue {
 }
 
 export function sumDecimalValues(values: DecimalValue[]): DecimalValue {
-  const total = values.reduce((accumulator, value) => accumulator + decimalToCents(value), 0);
+  const total = values.reduce(
+    (accumulator, value) => accumulator + decimalToCents(value),
+    0,
+  );
   return centsToDecimal(total);
 }
 

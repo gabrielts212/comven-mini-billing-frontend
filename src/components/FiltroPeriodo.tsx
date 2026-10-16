@@ -50,7 +50,7 @@ export function FiltroPeriodo({
         </div>
 
         <div className="field">
-          <label htmlFor="to">Ate</label>
+          <label htmlFor="to">Até</label>
           <input
             id="to"
             type="date"

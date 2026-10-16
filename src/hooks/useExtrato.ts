@@ -25,7 +25,7 @@ export function useExtrato(
       setError(
         loadError instanceof Error
           ? loadError.message
-          : "Nao foi possivel carregar o extrato.",
+          : "Não foi possível carregar o extrato.",
       );
     } finally {
       setLoading(false);

@@ -29,7 +29,7 @@ export function TabelaFaturas({ items }: TabelaFaturasProps) {
   if (items.length === 0) {
     return (
       <div className="empty-state">
-        Nenhuma fatura encontrada para o cliente e periodo informados.
+        Nenhuma fatura encontrada para o cliente e período informados.
       </div>
     );
   }
@@ -39,17 +39,19 @@ export function TabelaFaturas({ items }: TabelaFaturasProps) {
       <table className="statement-table">
         <thead>
           <tr>
-            <th>Periodo</th>
+            <th>Período</th>
             <th>Gerada em</th>
             <th>Valor total</th>
-            <th>Operacoes faturadas</th>
+            <th>Operações faturadas</th>
             <th>Status</th>
           </tr>
         </thead>
         <tbody>
           {items.map((item) => (
             <tr key={item.invoiceId}>
-              <td>{formatDate(item.periodStart)} a {formatDate(item.periodEnd)}</td>
+              <td>
+                {formatDate(item.periodStart)} a {formatDate(item.periodEnd)}
+              </td>
               <td>{formatDate(item.generatedAt)}</td>
               <td>{formatDecimalCurrency(item.totalAmount)}</td>
               <td>{item.operationCount}</td>

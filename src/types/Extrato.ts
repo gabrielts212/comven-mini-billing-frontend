@@ -11,11 +11,11 @@ export interface ExtratoOverview {
 }
 
 export const accountTypeLabel: Record<number, string> = {
-  1: "Pre-pago",
-  2: "Pos-pago",
+  1: "Pré-pago",
+  2: "Pós-pago",
 };
 
 export const customerOptions = [
-  { id: "cli-pre-001", label: "Ada Lovelace · pre-pago" },
-  { id: "cli-post-001", label: "Grace Hopper · pos-pago" },
+  { id: "cli-pre-001", label: "Ada Lovelace · pré-pago" },
+  { id: "cli-post-001", label: "Grace Hopper · pós-pago" },
 ];

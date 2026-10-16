@@ -1,18 +1,18 @@
-import { useMemo, useState } from 'react'
-import { FiltroPeriodo } from '../components/FiltroPeriodo'
-import { NovaOperacaoModal } from '../components/NovaOperacaoModal'
-import { ScreenTabs } from '../components/ScreenTabs'
-import { SummaryCard } from '../components/SummaryCard'
-import { TabelaOperacoes } from '../components/TabelaOperacoes'
-import { useExtrato } from '../hooks/useExtrato'
-import { accountTypeLabel } from '../types/Extrato'
-import { formatDecimalCurrency } from '../types/decimal'
+import { useMemo, useState } from "react";
+import { FiltroPeriodo } from "../components/FiltroPeriodo";
+import { NovaOperacaoModal } from "../components/NovaOperacaoModal";
+import { ScreenTabs } from "../components/ScreenTabs";
+import { SummaryCard } from "../components/SummaryCard";
+import { TabelaOperacoes } from "../components/TabelaOperacoes";
+import { useExtrato } from "../hooks/useExtrato";
+import { accountTypeLabel } from "../types/Extrato";
+import { formatDecimalCurrency } from "../types/decimal";
 
 interface ExtratoPageProps {
-  activeScreen: 'extrato' | 'faturas'
-  customerExternalId: string
-  onCustomerChange: (value: string) => void
-  onScreenChange: (screen: 'extrato' | 'faturas') => void
+  activeScreen: "extrato" | "faturas";
+  customerExternalId: string;
+  onCustomerChange: (value: string) => void;
+  onScreenChange: (screen: "extrato" | "faturas") => void;
 }
 
 export function ExtratoPage({
@@ -21,49 +21,63 @@ export function ExtratoPage({
   onCustomerChange,
   onScreenChange,
 }: ExtratoPageProps) {
-  const [from, setFrom] = useState('')
-  const [to, setTo] = useState('')
-  const [flashMessage, setFlashMessage] = useState<string | null>(null)
-  const [isModalOpen, setIsModalOpen] = useState(false)
-  const { data, error, loading, reload } = useExtrato(customerExternalId, from, to)
+  const [from, setFrom] = useState("");
+  const [to, setTo] = useState("");
+  const [flashMessage, setFlashMessage] = useState<string | null>(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const { data, error, loading, reload } = useExtrato(
+    customerExternalId,
+    from,
+    to,
+  );
 
   const accountLabel = useMemo(() => {
     if (!data) {
-      return 'Carregando'
+      return "Carregando";
     }
 
-    return accountTypeLabel[data.accountType] ?? 'Desconhecido'
-  }, [data])
+    return accountTypeLabel[data.accountType] ?? "Desconhecido";
+  }, [data]);
 
   async function handleOperationSuccess(message: string) {
-    setFlashMessage(message)
-    await reload()
+    setFlashMessage(message);
+    await reload();
   }
 
   return (
     <>
       <main className="shell">
-        <ScreenTabs activeScreen={activeScreen} onScreenChange={onScreenChange} />
+        <ScreenTabs
+          activeScreen={activeScreen}
+          onScreenChange={onScreenChange}
+        />
 
         <section className="hero">
           <div className="hero-grid">
             <div>
               <span className="eyebrow">Comven Challenge</span>
-              <h1>Extrato e nova operacao com mais consistencia.</h1>
+              <h1>Extrato e nova operação com mais consistência.</h1>
               <p>
-                Consulte historico, filtre por periodo e registre novas operacoes em um fluxo
-                unico, com mensagens claras retornadas pela API.
+                Consulte histórico, filtre por período e registre novas
+                operações em um fluxo único, com mensagens claras retornadas
+                pela API.
               </p>
             </div>
 
             <aside className="hero-aside">
               <div className="hero-chip">
                 <strong>Dinheiro tratado como decimal textual</strong>
-                <span className="muted">A interface evita manter valores monetarios em number para preservar precisao.</span>
+                <span className="muted">
+                  A interface evita manter valores monetários em number para
+                  preservar precisão.
+                </span>
               </div>
               <div className="hero-chip">
                 <strong>Fluxos PRE e POS</strong>
-                <span className="muted">Alterne o cliente para validar saldo imediato ou faturamento posterior.</span>
+                <span className="muted">
+                  Alterne o cliente para validar saldo imediato ou faturamento
+                  posterior.
+                </span>
               </div>
             </aside>
           </div>
@@ -71,18 +85,20 @@ export function ExtratoPage({
           <div className="summary-grid">
             <SummaryCard
               title="Cliente"
-              value={data?.customerName ?? 'Carregando...'}
-              hint={data?.customerExternalId ?? 'Aguardando API'}
+              value={data?.customerName ?? "Carregando..."}
+              hint={data?.customerExternalId ?? "Aguardando API"}
             />
             <SummaryCard
-              title="Saldo disponivel"
-              value={formatDecimalCurrency(data?.availableBalance ?? '0.00')}
+              title="Saldo disponível"
+              value={formatDecimalCurrency(data?.availableBalance ?? "0.00")}
               hint={`Modelo: ${accountLabel}`}
             />
             <SummaryCard
               title="A faturar"
-              value={formatDecimalCurrency(data?.outstandingInvoiceAmount ?? '0.00')}
-              hint="Uso pos-pago ainda nao fechado"
+              value={formatDecimalCurrency(
+                data?.outstandingInvoiceAmount ?? "0.00",
+              )}
+              hint="Uso pós-pago ainda não fechado"
             />
           </div>
         </section>
@@ -94,11 +110,17 @@ export function ExtratoPage({
                 <div className="toolbar">
                   <div>
                     <h2>Extrato do cliente</h2>
-                    <p className="muted">Acompanhe movimentacoes e veja quem atendeu cada operacao.</p>
+                    <p className="muted">
+                      Acompanhe movimentações e veja quem atendeu cada operação.
+                    </p>
                   </div>
 
-                  <button className="button button-primary" onClick={() => setIsModalOpen(true)} type="button">
-                    Nova operacao
+                  <button
+                    className="button button-primary"
+                    onClick={() => setIsModalOpen(true)}
+                    type="button"
+                  >
+                    Nova operação
                   </button>
                 </div>
 
@@ -112,9 +134,15 @@ export function ExtratoPage({
                   onToChange={setTo}
                 />
 
-                {flashMessage ? <div className="alert alert-success">{flashMessage}</div> : null}
-                {error ? <div className="alert alert-error">{error}</div> : null}
-                {loading && !data ? <div className="alert alert-info">Carregando extrato...</div> : null}
+                {flashMessage ? (
+                  <div className="alert alert-success">{flashMessage}</div>
+                ) : null}
+                {error ? (
+                  <div className="alert alert-error">{error}</div>
+                ) : null}
+                {loading && !data ? (
+                  <div className="alert alert-info">Carregando extrato...</div>
+                ) : null}
                 {data ? <TabelaOperacoes items={data.items} /> : null}
               </div>
             </article>
@@ -123,23 +151,31 @@ export function ExtratoPage({
           <aside className="stack">
             <article className="panel">
               <div className="panel-body sidebar-copy">
-                <h3>Leitura rapida</h3>
+                <h3>Leitura rápida</h3>
                 <div className="summary-strip">
                   <div className="summary-pill">
                     <span>Tipo de conta</span>
                     <strong>{accountLabel}</strong>
                   </div>
                   <div className="summary-pill">
-                    <span>Periodo</span>
-                    <strong>{from || 'Inicio'} a {to || 'Hoje'}</strong>
+                    <span>Período</span>
+                    <strong>
+                      {from || "Inicio"} a {to || "Hoje"}
+                    </strong>
                   </div>
                   <div className="summary-pill">
-                    <span>Operacoes</span>
+                    <span>Operações</span>
                     <strong>{data?.items.length ?? 0}</strong>
                   </div>
                 </div>
-                <p className="muted">Erros estruturados da API sao convertidos para mensagens legiveis antes de chegar na tela.</p>
-                <p className="muted">A chave de idempotencia fica visivel no modal para reproduzir cenarios de timeout e clique duplo.</p>
+                <p className="muted">
+                  Erros estruturados da API são convertidos para mensagens
+                  legíveis antes de chegar na tela.
+                </p>
+                <p className="muted">
+                  A chave de idempotência fica visível no modal para reproduzir
+                  cenários de timeout e clique duplo.
+                </p>
               </div>
             </article>
           </aside>
@@ -153,5 +189,5 @@ export function ExtratoPage({
         onSuccess={handleOperationSuccess}
       />
     </>
-  )
+  );
 }

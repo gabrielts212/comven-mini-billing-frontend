@@ -31,7 +31,7 @@ export function useFaturas(
       setError(
         loadError instanceof Error
           ? loadError.message
-          : "Nao foi possivel carregar as faturas.",
+          : "Não foi possível carregar as faturas.",
       );
     } finally {
       setLoading(false);

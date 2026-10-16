@@ -22,7 +22,11 @@ export function FaturasPage({
 }: FaturasPageProps) {
   const [from, setFrom] = useState("");
   const [to, setTo] = useState("");
-  const { data, invoices, error, loading, reload } = useFaturas(customerExternalId, from, to);
+  const { data, invoices, error, loading, reload } = useFaturas(
+    customerExternalId,
+    from,
+    to,
+  );
 
   const accountLabel = useMemo(() => {
     if (!data) {
@@ -37,7 +41,9 @@ export function FaturasPage({
     [invoices],
   );
 
-  const openInvoices = invoices.filter((invoice) => invoice.status === "open").length;
+  const openInvoices = invoices.filter(
+    (invoice) => invoice.status === "open",
+  ).length;
   const isPostPaid = data?.accountType === 2;
 
   return (
@@ -48,24 +54,26 @@ export function FaturasPage({
         <div className="hero-grid">
           <div>
             <span className="eyebrow">Comven Challenge</span>
-            <h1>Faturas consolidadas para clientes pos-pagos.</h1>
+            <h1>Faturas consolidadas para clientes pós-pagos.</h1>
             <p>
-              Consulte os fechamentos gerados, acompanhe o valor faturado por periodo e veja
-              quantas operacoes entraram em cada ciclo.
+              Consulte os fechamentos gerados, acompanhe o valor faturado por
+              período e veja quantas operações entraram em cada ciclo.
             </p>
           </div>
 
           <aside className="hero-aside">
             <div className="hero-chip">
-              <strong>Fechamento por periodo</strong>
+              <strong>Fechamento por período</strong>
               <span className="muted">
-                Cada fatura exibe data de geracao, quantidade de operacoes e status do ciclo.
+                Cada fatura exibe data de geração, quantidade de operações e
+                status do ciclo.
               </span>
             </div>
             <div className="hero-chip">
-              <strong>Leitura do que ja existe</strong>
+              <strong>Leitura do que já existe</strong>
               <span className="muted">
-                O resumo de faturas e derivado do extrato, incluindo fechamentos e saldo ainda em aberto.
+                O resumo de faturas é derivado do extrato, incluindo fechamentos
+                e saldo ainda em aberto.
               </span>
             </div>
           </aside>
@@ -80,17 +88,19 @@ export function FaturasPage({
           <SummaryCard
             title="Modelo"
             value={accountLabel}
-            hint="Somente clientes pos-pagos geram faturas"
+            hint="Somente clientes pós-pagos geram faturas"
           />
           <SummaryCard
-            title="Total no periodo"
+            title="Total no período"
             value={formatDecimalCurrency(totalBilled)}
             hint={`${invoices.length} fatura(s) encontrada(s)`}
           />
           <SummaryCard
             title="Em aberto"
             value={String(openInvoices)}
-            hint={formatDecimalCurrency(data?.outstandingInvoiceAmount ?? "0.00")}
+            hint={formatDecimalCurrency(
+              data?.outstandingInvoiceAmount ?? "0.00",
+            )}
           />
         </div>
       </section>
@@ -102,7 +112,10 @@ export function FaturasPage({
               <div className="toolbar">
                 <div>
                   <h2>Faturas do cliente</h2>
-                  <p className="muted">Veja o historico de faturamento e os ciclos ainda nao fechados.</p>
+                  <p className="muted">
+                    Veja o histórico de faturamento e os ciclos ainda não
+                    fechados.
+                  </p>
                 </div>
               </div>
 
@@ -118,10 +131,13 @@ export function FaturasPage({
               />
 
               {error ? <div className="alert alert-error">{error}</div> : null}
-              {loading && !data ? <div className="alert alert-info">Carregando faturas...</div> : null}
+              {loading && !data ? (
+                <div className="alert alert-info">Carregando faturas...</div>
+              ) : null}
               {data && !isPostPaid ? (
                 <div className="empty-state">
-                  Este cliente e pre-pago. Troque para um cliente pos-pago para consultar faturas.
+                  Este cliente é pré-pago. Troque para um cliente pós-pago para
+                  consultar faturas.
                 </div>
               ) : null}
               {data && isPostPaid ? <TabelaFaturas items={invoices} /> : null}
@@ -139,17 +155,26 @@ export function FaturasPage({
                   <strong>Abertas e fechadas</strong>
                 </div>
                 <div className="summary-pill">
-                  <span>Periodo</span>
-                  <strong>{from || "Inicio"} a {to || "Hoje"}</strong>
+                  <span>Período</span>
+                  <strong>
+                    {from || "Inicio"} a {to || "Hoje"}
+                  </strong>
                 </div>
                 <div className="summary-pill">
-                  <span>Operacoes</span>
-                  <strong>{invoices.reduce((accumulator, invoice) => accumulator + invoice.operationCount, 0)}</strong>
+                  <span>Operações</span>
+                  <strong>
+                    {invoices.reduce(
+                      (accumulator, invoice) =>
+                        accumulator + invoice.operationCount,
+                      0,
+                    )}
+                  </strong>
                 </div>
               </div>
               <p className="muted">
-                Faturas fechadas usam os eventos de fechamento da conta. Quando ainda existe valor pendente,
-                a interface mostra um ciclo em aberto separado.
+                Faturas fechadas usam os eventos de fechamento da conta. Quando
+                ainda existe valor pendente, a interface mostra um ciclo em
+                aberto separado.
               </p>
             </div>
           </article>
