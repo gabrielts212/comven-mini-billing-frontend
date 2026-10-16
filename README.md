@@ -42,6 +42,7 @@ npm run dev
 
 ## Variaveis uteis
 
+- VITE_API_URL: URL base da API usada pelo frontend (por exemplo, `https://comven-mini-billing-backend.onrender.com`); configure tambem na Vercel
 - VITE_API_PROXY_TARGET: sobrescreve o destino do proxy do Vite durante o desenvolvimento
 
 Consulte tambem o arquivo [.env.example](.env.example).
