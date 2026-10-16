@@ -10,16 +10,28 @@ Aqui a escolha por React reduz tempo de setup e permite concentrar o esforco nos
 ## Estrutura atual
 
 - src/pages/ExtratoPage.tsx: pagina principal do extrato
+- src/pages/FaturasPage.tsx: pagina complementar de faturas para clientes pos-pagos
 - src/components/TabelaOperacoes.tsx: tabela reutilizavel de movimentacoes
+- src/components/TabelaFaturas.tsx: tabela de ciclos faturados e em aberto
 - src/components/FiltroPeriodo.tsx: filtros de cliente e periodo
 - src/components/NovaOperacaoModal.tsx: criacao de operacao com idempotencia visivel
+- src/components/ScreenTabs.tsx: navegacao simples entre extrato e faturas
 - src/services/api.ts: cliente HTTP e tratamento de erro da API
 - src/services/extratoService.ts: consulta de extrato
 - src/services/operacoesService.ts: criacao de operacoes
+- src/services/faturasService.ts: consolidacao de faturas a partir do extrato
 - src/hooks/useExtrato.ts: carregamento do extrato
+- src/hooks/useFaturas.ts: carregamento e consolidacao da tela de faturas
 - src/types/Operacao.ts: tipos de operacao
 - src/types/Extrato.ts: tipos de extrato e cliente
+- src/types/Fatura.ts: tipos de status e resumo de fatura
 - src/types/decimal.ts: representacao textual de dinheiro
+
+## Telas disponiveis
+
+- Extrato de operacoes
+- Nova operacao (via modal dentro do extrato)
+- Faturas para clientes pos-pagos
 
 ## Como rodar
 

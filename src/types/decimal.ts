@@ -52,6 +52,34 @@ export function isNegativeDecimal(value: DecimalValue): boolean {
   return normalized.startsWith("-") && normalized !== "-0.00";
 }
 
+export function decimalToCents(value: DecimalValue): number {
+  const normalized = normalizeDecimalInput(value);
+  const negative = normalized.startsWith("-");
+  const unsigned = negative ? normalized.slice(1) : normalized;
+  const [wholePart, fractionPart = "00"] = unsigned.split(".");
+  const cents = Number.parseInt(wholePart, 10) * 100 + Number.parseInt(fractionPart, 10);
+
+  return negative ? -cents : cents;
+}
+
+export function centsToDecimal(value: number): DecimalValue {
+  if (!Number.isInteger(value)) {
+    throw new Error("O valor em centavos precisa ser um inteiro.");
+  }
+
+  const negative = value < 0;
+  const absolute = Math.abs(value);
+  const wholePart = Math.floor(absolute / 100);
+  const fractionPart = String(absolute % 100).padStart(2, "0");
+
+  return `${negative ? "-" : ""}${wholePart}.${fractionPart}`;
+}
+
+export function sumDecimalValues(values: DecimalValue[]): DecimalValue {
+  const total = values.reduce((accumulator, value) => accumulator + decimalToCents(value), 0);
+  return centsToDecimal(total);
+}
+
 export function toRawJsonDecimal(value: DecimalValue): string {
   return normalizeDecimalInput(value);
 }

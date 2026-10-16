@@ -8,6 +8,7 @@ interface FiltroPeriodoProps {
   onFromChange: (value: string) => void;
   onToChange: (value: string) => void;
   onRefresh: () => void;
+  refreshLabel?: string;
 }
 
 export function FiltroPeriodo({
@@ -18,6 +19,7 @@ export function FiltroPeriodo({
   onFromChange,
   onToChange,
   onRefresh,
+  refreshLabel = "Atualizar extrato",
 }: FiltroPeriodoProps) {
   return (
     <>
@@ -64,7 +66,7 @@ export function FiltroPeriodo({
           onClick={onRefresh}
           type="button"
         >
-          Atualizar extrato
+          {refreshLabel}
         </button>
       </div>
     </>

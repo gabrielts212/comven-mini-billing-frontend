@@ -1,14 +1,26 @@
 import { useMemo, useState } from 'react'
 import { FiltroPeriodo } from '../components/FiltroPeriodo'
 import { NovaOperacaoModal } from '../components/NovaOperacaoModal'
+import { ScreenTabs } from '../components/ScreenTabs'
 import { SummaryCard } from '../components/SummaryCard'
 import { TabelaOperacoes } from '../components/TabelaOperacoes'
 import { useExtrato } from '../hooks/useExtrato'
 import { accountTypeLabel } from '../types/Extrato'
 import { formatDecimalCurrency } from '../types/decimal'
 
-export function ExtratoPage() {
-  const [customerExternalId, setCustomerExternalId] = useState('cli-pre-001')
+interface ExtratoPageProps {
+  activeScreen: 'extrato' | 'faturas'
+  customerExternalId: string
+  onCustomerChange: (value: string) => void
+  onScreenChange: (screen: 'extrato' | 'faturas') => void
+}
+
+export function ExtratoPage({
+  activeScreen,
+  customerExternalId,
+  onCustomerChange,
+  onScreenChange,
+}: ExtratoPageProps) {
   const [from, setFrom] = useState('')
   const [to, setTo] = useState('')
   const [flashMessage, setFlashMessage] = useState<string | null>(null)
@@ -31,6 +43,8 @@ export function ExtratoPage() {
   return (
     <>
       <main className="shell">
+        <ScreenTabs activeScreen={activeScreen} onScreenChange={onScreenChange} />
+
         <section className="hero">
           <div className="hero-grid">
             <div>
@@ -92,7 +106,7 @@ export function ExtratoPage() {
                   customerExternalId={customerExternalId}
                   from={from}
                   to={to}
-                  onCustomerChange={setCustomerExternalId}
+                  onCustomerChange={onCustomerChange}
                   onFromChange={setFrom}
                   onRefresh={() => void reload()}
                   onToChange={setTo}
