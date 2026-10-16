@@ -1,54 +1,102 @@
-# Comven Mini Billing Frontend
+## Primeiro passo npm i e depois npm run dev ✔
 
-Frontend inicial do desafio da Comven usando React + TypeScript + Vite.
+Frontend do desafio da Comven construído com React, TypeScript e Vite.
 
-## Por que React
+Este projeto foi pensado para demonstrar de forma direta os fluxos mais importantes do mini billing:
 
-O enunciado cita Angular ou Vue como opcoes preferenciais, mas permite a tecnologia de maior familiaridade desde que isso seja explicado.
-Aqui a escolha por React reduz tempo de setup e permite concentrar o esforco nos pontos criticos do teste: idempotencia, saldo, estorno e faturamento.
+- consulta de extrato com filtro por cliente e período
+- criação de nova operação com chave de idempotência visível
+- simulação de falha de provedor para validar replay e estorno único
+- visualização de saldo disponível e valor ainda a faturar
+- consolidação de faturas para clientes pós-pagos
 
-## Estrutura atual
+## 1. Introdução 📘
 
-- src/pages/ExtratoPage.tsx: pagina principal do extrato
-- src/pages/FaturasPage.tsx: pagina complementar de faturas para clientes pos-pagos
-- src/components/TabelaOperacoes.tsx: tabela reutilizavel de movimentacoes
-- src/components/TabelaFaturas.tsx: tabela de ciclos faturados e em aberto
-- src/components/FiltroPeriodo.tsx: filtros de cliente e periodo
-- src/components/NovaOperacaoModal.tsx: criacao de operacao com idempotencia visivel
-- src/components/ScreenTabs.tsx: navegacao simples entre extrato e faturas
-- src/services/api.ts: cliente HTTP e tratamento de erro da API
+O enunciado cita Angular ou Vue como opções preferenciais, mas permite a tecnologia de maior familiaridade desde que isso seja explicado.
+
+Aqui a escolha por React reduz o tempo de setup e mantém o foco nos pontos mais sensíveis do desafio: idempotência, saldo, estorno e faturamento.
+
+## 2. Tecnologias Utilizadas 🖥
+
+As principais tecnologias utilizadas no projeto:
+
+- React 18
+- TypeScript 5
+- Vite 5
+- Fetch API nativa para integração com o backend
+- Variáveis de ambiente para configuração entre desenvolvimento e produção
+
+## 3. Estrutura do Projeto 🧩
+
+### Telas principais
+
+- src/pages/ExtratoPage.tsx: tela principal com resumo da conta, filtros, tabela de operações e entrada para nova operação
+- src/pages/FaturasPage.tsx: tela de faturas consolidadas para clientes pós-pagos
+
+### Componentes principais
+
+- src/components/FiltroPeriodo.tsx: seletor de cliente e período com ação de recarga
+- src/components/NovaOperacaoModal.tsx: formulário de criação de operação com idempotência e simulação de timeout
+- src/components/ScreenTabs.tsx: alternância entre extrato e faturas
+- src/components/SummaryCard.tsx: cartões de resumo no topo das telas
+- src/components/TabelaOperacoes.tsx: listagem de movimentações do extrato
+- src/components/TabelaFaturas.tsx: listagem de faturas abertas e fechadas
+
+### Hooks, serviços e tipos
+
+- src/hooks/useExtrato.ts: carregamento e recarga do extrato
+- src/hooks/useFaturas.ts: consolidação de faturas a partir do extrato
+- src/services/api.ts: cliente HTTP, resolução de base URL e tratamento de erros da API
 - src/services/extratoService.ts: consulta de extrato
-- src/services/operacoesService.ts: criacao de operacoes
-- src/services/faturasService.ts: consolidacao de faturas a partir do extrato
-- src/hooks/useExtrato.ts: carregamento do extrato
-- src/hooks/useFaturas.ts: carregamento e consolidacao da tela de faturas
-- src/types/Operacao.ts: tipos de operacao
-- src/types/Extrato.ts: tipos de extrato e cliente
+- src/services/operacoesService.ts: criação de operações
+- src/services/faturasService.ts: montagem da visão de faturamento
+- src/types/Extrato.ts: tipos do extrato, labels de conta e clientes de exemplo
+- src/types/Operacao.ts: payloads e contratos de operação
 - src/types/Fatura.ts: tipos de status e resumo de fatura
-- src/types/decimal.ts: representacao textual de dinheiro
+- src/types/decimal.ts: utilitários para valores monetários tratados como texto decimal
 
-## Telas disponiveis
+## 4. Endpoints / Integração com backend 🔌
 
-- Extrato de operacoes
-- Nova operacao (via modal dentro do extrato)
-- Faturas para clientes pos-pagos
+Este frontend consome a API do backend da Comven por chamadas para rotas iniciadas em /api.
 
-## Como rodar
+Configuração esperada:
 
-```bash
-npm install
-npm run dev
-```
+- defina em .env ou no ambiente de deploy a variável VITE_API_URL com a URL base da API
+- em desenvolvimento, o Vite também pode encaminhar chamadas /api usando VITE_API_PROXY_TARGET
+- o frontend faz tratamento de erros estruturados para exibir mensagens mais legíveis na interface
 
-## Variaveis uteis
+Variáveis disponíveis no projeto:
 
-- VITE_API_URL: URL base da API usada pelo frontend (por exemplo, `https://comven-mini-billing-backend.onrender.com`); configure tambem na Vercel
-- VITE_API_PROXY_TARGET: sobrescreve o destino do proxy do Vite durante o desenvolvimento
+- VITE_API_URL=https://comven-mini-billing-backend.onrender.com
+- VITE_API_PROXY_TARGET=http://localhost:5086
 
-Consulte tambem o arquivo [.env.example](.env.example).
+Clientes de exemplo já disponíveis na interface:
 
-## Build
+- Ada Lovelace: cliente pré-pago
+- Grace Hopper: cliente pós-pago
 
-```bash
-npm run build
-```
+## 5. Como rodar o frontend (dev) 🚀
+
+- Instale as dependências: npm i
+- Se necessário, copie o arquivo de exemplo de ambiente: copy .env.example .env
+- Inicie a aplicação: npm run dev
+- O frontend será servido em http://localhost:5173
+
+## 6. Scripts disponíveis ⚙
+
+- npm run dev: inicia o servidor de desenvolvimento
+- npm run build: executa o TypeScript em modo build e gera o bundle de produção
+- npm run lint: faz checagem de tipos com tsc --noEmit
+- npm run preview: serve o build localmente para validação
+
+## 7. Observações 📝
+
+- os valores monetários são mantidos como decimal textual para evitar perda de precisão em number
+- a tela de faturas deriva os ciclos a partir do extrato e do valor ainda em aberto
+- a interface não depende de roteamento; a navegação entre telas é feita por estado local
+- o arquivo .env.example documenta os valores base usados no projeto
+
+## 8. Build de produção 📦
+
+- Gere o build com: npm run build
+- Se quiser validar o build localmente: npm run preview
