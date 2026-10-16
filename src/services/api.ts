@@ -15,7 +15,12 @@ interface ProblemDetailsPayload {
   errors?: Record<string, string[]>;
 }
 
-const apiBaseUrl = (import.meta.env.VITE_API_URL ?? "https://comven-mini-billing-backend.onrender.com").replace(/\/$/, "");
+const apiBaseUrl = import.meta.env.DEV
+  ? ""
+  : (
+      import.meta.env.VITE_API_URL ??
+      "https://comven-mini-billing-backend.onrender.com"
+    ).replace(/\/$/, "");
 
 function resolveApiUrl(input: RequestInfo | URL): RequestInfo | URL {
   if (!apiBaseUrl) {
@@ -27,11 +32,20 @@ function resolveApiUrl(input: RequestInfo | URL): RequestInfo | URL {
   }
 
   if (input instanceof URL && input.pathname.startsWith("/api/")) {
-    return new URL(`${input.pathname}${input.search}${input.hash}`, `${apiBaseUrl}/`);
+    return new URL(
+      `${input.pathname}${input.search}${input.hash}`,
+      `${apiBaseUrl}/`,
+    );
   }
 
-  if (input instanceof Request && new URL(input.url).pathname.startsWith("/api/")) {
-    return new Request(`${apiBaseUrl}${new URL(input.url).pathname}${new URL(input.url).search}`, input);
+  if (
+    input instanceof Request &&
+    new URL(input.url).pathname.startsWith("/api/")
+  ) {
+    return new Request(
+      `${apiBaseUrl}${new URL(input.url).pathname}${new URL(input.url).search}`,
+      input,
+    );
   }
 
   return input;
